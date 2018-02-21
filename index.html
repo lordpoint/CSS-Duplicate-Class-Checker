@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CSS Dryer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+</head>
+<body>
+
+    <!-- 
+    CHALLENGES :
+        - Identify styles within @media queries
+    -->
+
+    <div id="app">
+
+        <header>
+            <h1 class="header-title"><span style="color: rgb(206, 72, 72)">CSS</span>Dryer</h1>
+            <span class="reset-btn" v-if="fileUploaded" v-on:click="reset()">RESET</span>
+        </header>
+
+        <main>
+
+            <div class="file-uploader wrapper" v-if="!fileUploaded">
+                <h2>Check CSS for duplicate styles</h2>
+                <p>Upload a .css file to see whether you have any duplicate styles</p>
+                <p>** Ignores styles defined within media queries **</p>
+                <hr>
+                <label class="upload-label">
+                    <input 
+                        id="file-input"
+                        class="upload-field" 
+                        type="file" 
+                        required
+                        @change="handleFiles"/>
+                    <img src="./assets/css.svg" alt="Upload a file">
+                    <span>Upload CSS file</span>
+                </label>
+            </div>
+
+            <div class="results-area wrapper" v-if="fileUploaded">
+                <h2>Results</h2>
+                <p>The following selectors specify identical styles:</p>
+                <p class="ignored" v-if="reduced">File reduced {{ reducedBy }}% by ignoring @media queries</p>
+                <hr>
+                <h2 v-if="results.length === 0">No duplicate styles found!</h2>
+                <div class="class-results" v-for="result in results" :key="result.id">
+                        <span class="dark-box name-results" v-for="name in result.name">
+                            {{ name }}
+                        </span>
+                        <div class="style-container dark-box">
+                            <span v-for="style in result.styles">
+                                {{ style }}
+                            </span>
+                        </div>
+                </div>
+            </div>
+            
+        </main>
+    
+    </div>
+
+    <!-- <script src="scripts.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="vue-scripts.js"></script>
+    <script>
+    
+    </script>
+</body>
+</html>
